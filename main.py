@@ -230,7 +230,8 @@ l_valor_total.place(x=450, y=12)
 l_qtd = Label(
     frameMeio, 
     width=10, 
-    height=2, 
+    height=2,
+    pady=5, 
     anchor=CENTER, 
     font=('Ivy 25 bold'), 
     bg=co7, 
@@ -248,6 +249,62 @@ l_qtd_itens = Label(
     fg=co1
 )
 l_qtd_itens.place(x=460, y=92)
+
+# Frame de baixo ---------------------------------------------------------------------------------
+# Função para mostrar os dados na tabela
+def mostrar():
+    # Definindo os cabeçalhos
+    tabela_head = ['#Item', 'Nome', 'Sala/Área', 'Descrição', 'Marca/Modelo', 'Data da compra', 'Valor da compra', 'Número de série']
+
+    # Lista de itens (exemplo vazio)
+    lista_itens = []
+
+    global tree
+
+    # Configurando Treeview
+    tree = ttk.Treeview(
+        frameBaixo, 
+        selectmode="extended",
+        columns=tabela_head, 
+        show="headings"
+    )
+
+    # Scrollbars
+    vsb = ttk.Scrollbar(frameBaixo, orient="vertical", command=tree.yview)
+    hsb = ttk.Scrollbar(frameBaixo, orient="horizontal", command=tree.xview)
+
+    tree.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
+
+    # Posicionando Treeview e Scrollbars
+    tree.grid(column=0, row=0, sticky='nsew')
+    vsb.grid(column=1, row=0, sticky='ns')
+    hsb.grid(column=0, row=1, sticky='ew')
+
+    frameBaixo.grid_rowconfigure(0, weight=12)
+
+    # Configuração das colunas
+    hd = ["center"] * len(tabela_head)
+    h = [40, 150, 100, 160, 130, 100, 100, 100]
+
+    for n, col in enumerate(tabela_head):
+        tree.heading(col, text=col.title(), anchor=CENTER)
+        tree.column(col, width=h[n], anchor=hd[n])
+
+    # Inserindo itens na tabela
+    for item in lista_itens:
+        tree.insert('', 'end', values=item)
+
+    # Calculando totais
+    quantidade = [iten[6] for iten in lista_itens]
+    Total_valor = sum(quantidade)
+    Total_itens = len(quantidade)
+
+    # Atualizando Labels
+    l_total['text'] = 'R$ {:,.2f}'.format(Total_valor)
+    l_qtd['text'] = Total_itens
+
+# Chamando a função para mostrar os dados
+mostrar()
 
 # Executando a janela
 janela.mainloop()
