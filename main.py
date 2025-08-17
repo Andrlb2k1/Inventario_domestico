@@ -10,7 +10,7 @@ from PIL import Image, ImageTk
 # Importando Tkcalendar
 from tkcalendar import DateEntry
 
-from view import atualizar_form, deletar_form, inserir_form, ver_item
+from view import atualizar_form, deletar_form, inserir_form, ver_form, ver_item
 
 # Cores do projeto
 co0 = "#2e2d2b"  # Preto
@@ -198,6 +198,27 @@ def ver_imagem():
     l_imagem = Label(frameMeio, image=imagem, bg=co1, fg=co4)
     l_imagem.place(x=700, y=10)
 
+# Função para escolher imagem
+def escolher_imagem():
+    global l_imagem, imagem, imagem_string
+
+    imagem = fd.askopenfilename()
+    imagem_string = imagem
+
+    # Abrindo imagem
+    imagem = Image.open(imagem)
+    imagem = imagem.resize((170, 170))
+    imagem = ImageTk.PhotoImage(imagem)
+
+    # Adicionando o logo à interface
+    l_imagem = Label(
+        frameMeio, 
+        image=imagem, 
+        bg=co1, 
+        fg=co4
+    )
+    l_imagem.place(x=700, y=10)
+
 # Frame de cima ---------------------------------------------------------------------------------
 # Abrindo e configurando a imagem do logo
 app_img = Image.open('inventario.png')
@@ -276,7 +297,7 @@ l_carregar.place(x=10, y=220)
 
 botao_carregar = Button(
     frameMeio,
-    command=ver_imagem,
+    command=escolher_imagem,
     compound=CENTER, 
     anchor=CENTER, 
     text="CARREGAR", 
@@ -350,7 +371,8 @@ img_item = Image.open('item.png').resize((20, 20))
 img_item = ImageTk.PhotoImage(img_item)
 
 botao_ver = Button(
-    frameMeio, 
+    frameMeio,
+    command=ver_imagem,
     image=img_item, 
     compound=LEFT, 
     anchor=NW, 
@@ -415,8 +437,8 @@ def mostrar():
     # Definindo os cabeçalhos
     tabela_head = ['#Item', 'Nome', 'Sala/Área', 'Descrição', 'Marca/Modelo', 'Data da compra', 'Valor da compra', 'Número de série']
 
-    # Lista de itens (exemplo vazio)
-    lista_itens = []
+    # Lista de itens
+    lista_itens = ver_form()
 
     global tree
 
