@@ -185,6 +185,7 @@ def ver_imagem():
     treev_dados = tree.focus()
     treev_dicionario = tree.item(treev_dados)
     treev_lista = treev_dicionario['values']
+
     valor = [int(treev_lista[0])]
 
     item = ver_item(valor)
@@ -434,13 +435,14 @@ l_qtd_itens.place(x=460, y=92)
 # Frame de baixo ---------------------------------------------------------------------------------
 # Função para mostrar os dados na tabela
 def mostrar():
+
+    global tree
+
     # Definindo os cabeçalhos
     tabela_head = ['#Item', 'Nome', 'Sala/Área', 'Descrição', 'Marca/Modelo', 'Data da compra', 'Valor da compra', 'Número de série']
 
     # Lista de itens
     lista_itens = ver_form()
-
-    global tree
 
     # Configurando Treeview
     tree = ttk.Treeview(

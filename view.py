@@ -39,7 +39,8 @@ def ver_form():
     lista_itens = []
     with con:
         cur = con.cursor()
-        cur.execute("SELECT * FROM Inventario")
+        query = "SELECT * FROM Inventario"
+        cur.execute(query)
         rows = cur.fetchall()
         for row in rows:
             lista_itens.append(row)
@@ -50,7 +51,8 @@ def ver_item(id):
     lista_itens = []
     with con:
         cur = con.cursor()
-        cur.execute("SELECT * FROM Inventario WHERE id=?", (id,))
+        query = "SELECT * FROM Inventario WHERE id=?"
+        cur.execute(query,id)
         rows = cur.fetchall()
         for row in rows:
             lista_itens.append(row)
