@@ -87,6 +87,7 @@ def inserir():
 
 # Função atualizar
 def atualizar():
+    global imagem, imagem_string, l_imagem
     try:
         treev_dados = tree.focus()
         treev_dicionario = tree.item(treev_dados)
@@ -110,6 +111,7 @@ def atualizar():
         e_cal.insert(0, treev_lista[5])
         e_valor.insert(0, treev_lista[6])
         e_serial.insert(0, treev_lista[7])
+        imagem_string = treev_lista[8]
 
         # Função interna para confirmação da atualização
         def update():
@@ -121,9 +123,12 @@ def atualizar():
             data = e_cal.get()
             valor = e_valor.get()
             serie = e_serial.get()
-            imagem = imagem_string or treev_lista[7]
+            imagem = imagem_string
 
-            lista_atualizar = [nome, local, descricao, model, data, valor, serie, imagem, id]
+            if imagem == '':
+                imagem = e_serial.insert(0, treev_lista[7])
+
+            lista_atualizar = [nome, local, descricao, model, data, valor, serie, imagem, str(id)]
 
             for i in lista_atualizar:
                 if i == '':
